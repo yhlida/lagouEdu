@@ -1,0 +1,133 @@
+1.请说出下列最终的执行结果,并解释为什么?
+var a = {};
+for(var i=0; i<10; i++){
+	a[i] = function(){
+		console.log(i);
+	};
+}
+a[6]();
+
+解答：
+控制台打印 10
+用var声明的变量，会变量提升，所以声明的变量i是全局变量；当调用a[6]()时，此时的全局i值已经变为10，所以打印出10；
+
+
+2.请说出下列最终的执行结果,并解释为什么?
+var tmp = {};
+if(true){
+	console.log(tmp);
+	let tmp;
+}
+
+解答：
+会抛出错误
+代码中if作用域中有声明tmp变量，所以不会使用外层全局变量tmp；
+又因为let声明的变量具有严格的作用域限制，在作用域内必须先声明才能使用；
+代码中if作用域中调用输出tmp变量时，变量tmp还没有被声明，所以使用tmp时会抛出异常；
+
+3.结合 ES6 新语法,用最简单的方式找出数组中的最小值
+var arr = [12,34,32,69,4];
+
+解答：
+arr.reduce((min,value)=> min>value?value:min)
+拓展：
+如何用.map() .filter() 和.reduce()给代码做“减法”
+const numbers = [1,2,3,4,5,6,7,8];
+1>map()对数组中的每一个元素使用同样的操作/表达式；
+let new_prices = numbers.map((price) => {return price * 1.06});
+2>filter()从对象中筛选出子集；
+let odds = numbers.filter(num => num % 2);
+3>reduce()该方法通过定义起点来运行。当该方法迭代每个值时，该起点将被修改并向下传递。
+reduce()方法的回调需要两个参数：累加器和当前值。
+numbers.reduce((min,value)=> min>value?value:min)
+4.请详细说明 var,let,const 三种声明变量的方式之间的具体差别
+解答：
+var声明：变量提升，可多次声明，会越域；
+let声明：不存在变量提升，只可声明一次，变量有严格的局部作用域
+const声明：声明之后不可更改（变量存储地址），声明时必须设置值；
+
+5.请说明下列代码最终输出的结果,并解释为什么
+var a = 10;
+var obj = {
+	a:20,
+	fn(){
+		setTimeout(()=>(
+			console.log(this.a);
+		));
+	}
+}
+
+解答：
+输出 20
+setTimeout回调函数用的箭头函数写法，箭头函数this指向跟箭头函数外的this指向一样，都是指向当前对象obj，所以输出20
+
+6.简述 Symbol 类型的用途
+symbol  新的基础数据类型, 每个Symbol实例都是唯一的
+1>使用Symbol来作为对象属性名(key) 
+let obj = {
+   [Symbol('name')]: 'name',
+   age: 18
+}
+Symbol类型的key是不能通过Object.keys()或者for...in来枚举的，它未被包含在对象自身的属性名集合(property names)之中。所以，利用该特性，我们可以把一些不需要对外操作和访问的属性使用Symbol来定义。
+2>使用Symbol来替代常量，保证常量名唯一性；
+3>利用Symbol定义类的私有属性/方法；
+4> 注册或获取一个window间全局Symbol实例Symbol.for(“global_symbol”); 
+Symbol不光在单个window中是唯一的，在多个相关window间也是唯一的。
+
+7.说说什么是浅拷贝,什么是深拷贝
+浅拷贝： 拷贝对象与被拷贝对象任何一方修改，都会影响到另一方；
+深拷贝：拷贝对象与被拷贝对象任何一方修改，都不会相互影响； 
+
+深拷贝实现：
+1》 JSON.stringify与JSON.parse
+function deepClone(obj){
+    let _obj = JSON.stringify(obj),
+        objClone = JSON.parse(_obj);
+    return objClone
+}    
+let a=[0,1,[2,3],4], b=deepClone(a);
+a[0]=1;
+a[2][0]=1;
+console.log(a,b);
+2》 递归拷贝所有层级的属性
+3》借用JQ的extend方法。 $.extend( [deep ], target, object1 [, objectN ] ) 
+Deep 为true为深拷贝，为false浅拷贝
+参考：https://www.cnblogs.com/echolun/p/7889848.html
+
+8.谈谈你是如何理解 JS 异步编程的, Event Loop 是做什么的,什么是宏任务,什么是微任务
+Event Loop 是计算机系统的一种运行机制。JavaScript语言就采用这种机制，来解决单线程运行带来的一些问题。
+宏任务一般是：包括整体代码script，setTimeout，setInterval、I/O、UI render。
+微任务主要是：Promise、process.nextTick 、Object.observe、MutationObserver。
+
+9.将下面异步代码使用 Promise 改进
+setTimeout(function(){
+	var a = "hello";
+	setTimeout(function(){
+		var b = "lagou";
+		setTimeout(function(){
+			var c = "I love U";
+			console.log(a+b+c);
+		},10);
+	},10);
+},10);
+
+var p = new Promise(function(resolve, reject){
+   resolve('hello');
+}).then(function(val){
+   return val+'lagou';
+}).then(function(val){
+   return val+'l love U';
+}).then(function(val){
+console.log(val);
+});
+
+10.请简述TypeScript 与 JavaScript 之间的关系
+TypeScript是 JavaScript 的超集，包含了 JavaScript 的所有元素，可以载入 JavaScript 代码运行，并扩展了 JavaScript 的语法。
+
+11.请谈谈你所认为的 TypeScript 优缺点 
+优点：
+1》通过类型注解提供编译时的静态类型检查, 可以在开发人员编写脚本时检测错误。
+2》使用TypeScript工具来进行重构变的更容易、快捷。
+缺点：
+1》学习成本相比于javascript更高；
+2》较小项目开发，增加了代码量；
