@@ -25,6 +25,7 @@ if(true){
 又因为let声明的变量具有严格的作用域限制，在作用域内必须先声明才能使用；
 代码中if作用域中调用输出tmp变量时，变量tmp还没有被声明，所以使用tmp时会抛出异常；
 
+
 3.结合 ES6 新语法,用最简单的方式找出数组中的最小值
 var arr = [12,34,32,69,4];
 
@@ -40,11 +41,14 @@ let odds = numbers.filter(num => num % 2);
 3>reduce()该方法通过定义起点来运行。当该方法迭代每个值时，该起点将被修改并向下传递。
 reduce()方法的回调需要两个参数：累加器和当前值。
 numbers.reduce((min,value)=> min>value?value:min)
+
+
 4.请详细说明 var,let,const 三种声明变量的方式之间的具体差别
 解答：
 var声明：变量提升，可多次声明，会越域；
 let声明：不存在变量提升，只可声明一次，变量有严格的局部作用域
 const声明：声明之后不可更改（变量存储地址），声明时必须设置值；
+
 
 5.请说明下列代码最终输出的结果,并解释为什么
 var a = 10;
@@ -61,6 +65,7 @@ var obj = {
 输出 20
 setTimeout回调函数用的箭头函数写法，箭头函数this指向跟箭头函数外的this指向一样，都是指向当前对象obj，所以输出20
 
+
 6.简述 Symbol 类型的用途
 symbol  新的基础数据类型, 每个Symbol实例都是唯一的
 1>使用Symbol来作为对象属性名(key) 
@@ -73,6 +78,7 @@ Symbol类型的key是不能通过Object.keys()或者for...in来枚举的，它�
 3>利用Symbol定义类的私有属性/方法；
 4> 注册或获取一个window间全局Symbol实例Symbol.for(“global_symbol”); 
 Symbol不光在单个window中是唯一的，在多个相关window间也是唯一的。
+
 
 7.说说什么是浅拷贝,什么是深拷贝
 浅拷贝： 拷贝对象与被拷贝对象任何一方修改，都会影响到另一方；
@@ -94,10 +100,12 @@ console.log(a,b);
 Deep 为true为深拷贝，为false浅拷贝
 参考：https://www.cnblogs.com/echolun/p/7889848.html
 
+
 8.谈谈你是如何理解 JS 异步编程的, Event Loop 是做什么的,什么是宏任务,什么是微任务
 Event Loop 是计算机系统的一种运行机制。JavaScript语言就采用这种机制，来解决单线程运行带来的一些问题。
 宏任务一般是：包括整体代码script，setTimeout，setInterval、I/O、UI render。
 微任务主要是：Promise、process.nextTick 、Object.observe、MutationObserver。
+
 
 9.将下面异步代码使用 Promise 改进
 setTimeout(function(){
@@ -121,8 +129,10 @@ var p = new Promise(function(resolve, reject){
 console.log(val);
 });
 
+
 10.请简述TypeScript 与 JavaScript 之间的关系
 TypeScript是 JavaScript 的超集，包含了 JavaScript 的所有元素，可以载入 JavaScript 代码运行，并扩展了 JavaScript 的语法。
+
 
 11.请谈谈你所认为的 TypeScript 优缺点 
 优点：
